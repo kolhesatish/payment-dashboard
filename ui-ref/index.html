@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meridian — Personal Finance Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <span class="wordmark">Meridian</span>
+    </div>
+    <div class="nav-center">
+      <div class="command-bar-trigger" id="commandBarTrigger">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="command-placeholder">Ask anything...</span>
+        <span class="command-shortcut">⌘K</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-icon-btn notification-btn" aria-label="Notifications">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notification-dot"></span>
+      </button>
+      <div class="user-avatar">JP</div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- WELCOME SECTION -->
+    <section class="welcome-section anim-fade-up">
+      <h1 class="welcome-heading">Good morning, Jordan</h1>
+      <p class="welcome-subtitle">Wednesday, February 25 · Here's your financial snapshot</p>
+    </section>
+
+    <!-- KEY METRICS -->
+    <section class="metrics-grid anim-fade-up anim-delay-1">
+      <!-- Net Worth -->
+      <div class="metric-card">
+        <span class="metric-label">Net Worth</span>
+        <div class="metric-value-row">
+          <span class="metric-value">$623,847</span>
+        </div>
+        <div class="metric-change positive">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+          +$12,340 this month
+        </div>
+      </div>
+      <!-- Monthly Budget -->
+      <div class="metric-card">
+        <span class="metric-label">Monthly Budget</span>
+        <div class="metric-value-row">
+          <span class="metric-value">$5,200</span>
+          <span class="metric-of">of $6,500</span>
+        </div>
+        <div class="budget-bar-container">
+          <div class="budget-bar" style="--bar-width: 80%"></div>
+        </div>
+        <span class="metric-note">80% spent · $1,300 remaining</span>
+      </div>
+      <!-- Savings Rate -->
+      <div class="metric-card">
+        <span class="metric-label">Savings Rate</span>
+        <div class="metric-value-row">
+          <span class="metric-value">28%</span>
+        </div>
+        <div class="gauge-container">
+          <svg class="gauge-svg" viewBox="0 0 120 75">
+            <path class="gauge-bg" d="M15,65 A45,45 0 0,1 105,65" fill="none" stroke-width="14" stroke-linecap="round"/>
+            <path class="gauge-fill" d="M15,65 A45,45 0 0,1 105,65" fill="none" stroke-width="14" stroke-linecap="round" style="--gauge-pct: 0.28"/>
+            <text x="60" y="60" text-anchor="middle" font-family="Inter" font-size="10" fill="#9B9590" font-weight="500">of 100%</text>
+          </svg>
+        </div>
+      </div>
+      <!-- Investments -->
+      <div class="metric-card">
+        <span class="metric-label">Investments</span>
+        <div class="metric-value-row">
+          <span class="metric-value">$389,200</span>
+        </div>
+        <div class="metric-change positive">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+          +2.1% MTD
+        </div>
+      </div>
+    </section>
+
+    <!-- MONEY MAP -->
+    <section class="money-map-section anim-fade-up anim-delay-2">
+      <div class="section-header">
+        <h2 class="section-title">Money Map</h2>
+        <span class="section-subtitle">Where your money lives</span>
+      </div>
+      <div class="money-map" id="moneyMap"></div>
+    </section>
+
+    <!-- TWO COLUMN LAYOUT -->
+    <section class="two-col-layout anim-fade-up anim-delay-3">
+      <!-- LEFT COLUMN -->
+      <div class="left-col">
+        <!-- Spending by Category -->
+        <div class="card">
+          <div class="section-header">
+            <h2 class="section-title">Monthly Spending</h2>
+            <span class="section-subtitle">February 2026</span>
+          </div>
+          <div class="donut-container">
+            <div class="donut-chart-wrap">
+              <canvas id="donutChart" width="260" height="260"></canvas>
+            </div>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+
+        <!-- Spending Trends -->
+        <div class="card">
+          <div class="section-header">
+            <h2 class="section-title">Spending Trends</h2>
+            <span class="section-subtitle">Last 6 months</span>
+          </div>
+          <div class="trends-chart-wrap">
+            <canvas id="trendsChart" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-col">
+        <!-- Recent Activity -->
+        <div class="card">
+          <div class="section-header">
+            <h2 class="section-title">Recent Activity</h2>
+          </div>
+          <div class="activity-feed" id="activityFeed"></div>
+          <a href="#" class="view-all-link" onclick="return false;">View all transactions →</a>
+        </div>
+
+        <!-- Upcoming Bills -->
+        <div class="card">
+          <div class="section-header">
+            <h2 class="section-title">Upcoming Bills</h2>
+            <span class="section-subtitle">Next 7 days</span>
+          </div>
+          <div class="bills-list" id="billsList"></div>
+        </div>
+
+        <!-- Savings Streaks -->
+        <div class="card savings-streaks-card">
+          <div class="streak-header">
+            <span class="streak-fire">🔥</span>
+            <span class="streak-title">12-week savings streak</span>
+          </div>
+          <p class="streak-desc">You've saved at least $500/week for 12 consecutive weeks</p>
+          <div class="streak-dots" id="streakDots"></div>
+          <div class="streak-badges">
+            <span class="badge badge-gold">🏆 First $500k</span>
+            <span class="badge badge-sage">✅ Emergency Fund Complete</span>
+            <span class="badge badge-terracotta">🎯 Debt-free by 30</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- COMMAND BAR MODAL -->
+  <div class="command-modal-overlay" id="commandModal">
+    <div class="command-modal">
+      <div class="command-input-row">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="command-input" id="commandInput" placeholder="Ask anything about your finances..." autocomplete="off">
+        <span class="command-esc">ESC</span>
+      </div>
+      <div class="command-results" id="commandResults">
+        <div class="command-suggestions" id="commandSuggestions">
+          <p class="suggestions-label">Suggestions</p>
+          <button class="suggestion-btn" data-query="How much did I spend on dining?">How much did I spend on dining?</button>
+          <button class="suggestion-btn" data-query="What's my savings rate?">What's my savings rate?</button>
+          <button class="suggestion-btn" data-query="Show me subscription costs">Show me subscription costs</button>
+          <button class="suggestion-btn" data-query="Project next month's spending">Project next month's spending</button>
+        </div>
+        <div class="command-answer" id="commandAnswer" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
